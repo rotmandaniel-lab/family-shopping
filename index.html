@@ -7,166 +7,394 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   :root {
-    --bg: #f5f0e8; --card: #fffdf7; --green: #2d6a4f; --green-light: #74c69d;
-    --green-pale: #d8f3dc; --orange: #e76f51; --orange-pale: #fde8e2;
-    --blue: #2d6899; --blue-pale: #dbeafe; --purple: #6b46c1; --purple-pale: #ede9fe;
-    --gray: #6b7280; --border: #e5dfd0; --text: #1a1a1a;
-    --shadow: 0 2px 12px rgba(0,0,0,0.07); --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+    --bg: #f5f0e8;
+    --card: #fffdf7;
+    --green: #2d6a4f;
+    --green-light: #74c69d;
+    --green-pale: #d8f3dc;
+    --orange: #e76f51;
+    --orange-pale: #fde8e2;
+    --blue: #2d6899;
+    --blue-pale: #dbeafe;
+    --purple: #6b46c1;
+    --purple-pale: #ede9fe;
+    --gray: #6b7280;
+    --border: #e5dfd0;
+    --text: #1a1a1a;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
   }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg); min-height: 100vh; color: var(--text); }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    color: var(--text);
+  }
 
   /* HEADER */
-  .header { background: var(--green); padding: 20px 20px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 16px rgba(0,0,0,0.12); }
-  .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-  .header h1 { font-family: 'Fraunces', serif; font-size: 1.6rem; color: #fff; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-  .header-stats { display: flex; gap: 8px; }
-  .stat-pill { background: rgba(255,255,255,0.15); color: #fff; border-radius: 20px; padding: 4px 12px; font-size: 0.8rem; font-weight: 500; }
+  .header {
+    background: var(--green);
+    padding: 20px 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    color: #fff;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .header h1 span { font-size: 1.5rem; }
+  .header-stats {
+    display: flex;
+    gap: 8px;
+  }
+  .stat-pill {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
   .stat-pill.done { background: var(--green-light); color: var(--green); }
-  .filter-tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+
+  /* FILTER TABS */
+  .filter-tabs {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    padding-bottom: 0;
+    scrollbar-width: none;
+  }
   .filter-tabs::-webkit-scrollbar { display: none; }
-  .tab { flex-shrink: 0; padding: 8px 16px; border-radius: 10px 10px 0 0; font-size: 0.82rem; font-weight: 500; cursor: pointer; border: none; background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); transition: all 0.18s; }
-  .tab.active { background: var(--bg); color: var(--green); font-weight: 600; }
+  .tab {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 10px 10px 0 0;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.75);
+    transition: all 0.18s;
+  }
+  .tab.active {
+    background: var(--bg);
+    color: var(--green);
+    font-weight: 600;
+  }
   .tab:hover:not(.active) { background: rgba(255,255,255,0.2); color: #fff; }
 
   /* MAIN */
   .main { padding: 16px; max-width: 640px; margin: 0 auto; }
 
   /* ADD FORM */
-  .add-card { background: var(--card); border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); }
-  .add-card h2 { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--green); margin-bottom: 14px; font-weight: 600; }
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .add-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .add-card h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    color: var(--green);
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
   .form-grid .full { grid-column: 1 / -1; }
-  label { display: block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--gray); margin-bottom: 4px; }
-  input, select, textarea { width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--text); background: #fff; transition: border-color 0.15s, box-shadow 0.15s; outline: none; appearance: none; }
-  input:focus, select:focus, textarea:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(45,106,79,0.1); }
+
+  label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray);
+    margin-bottom: 4px;
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    background: #fff;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+    appearance: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
+  }
   textarea { resize: none; height: 60px; line-height: 1.4; }
-  .added-by-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+
+  .added-by-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
   .added-by-row label { margin-bottom: 0; white-space: nowrap; }
   .family-btns { display: flex; gap: 6px; flex-wrap: wrap; }
-  .family-btn { padding: 5px 13px; border-radius: 20px; border: 1.5px solid var(--border); background: #fff; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.15s; color: var(--gray); }
+  .family-btn {
+    padding: 5px 13px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--gray);
+  }
   .family-btn.active { border-color: var(--green); background: var(--green-pale); color: var(--green); font-weight: 600; }
-  .add-btn { width: 100%; padding: 11px; background: var(--green); color: #fff; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: background 0.15s, transform 0.1s; margin-top: 4px; }
+
+  .add-btn {
+    width: 100%;
+    padding: 11px;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    margin-top: 4px;
+  }
   .add-btn:hover { background: #235e44; }
   .add-btn:active { transform: scale(0.98); }
-  .scan-btn { width: 100%; padding: 11px; background: #fff; color: var(--green); border: 2px dashed var(--green); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.15s; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .scan-btn:hover { background: var(--green-pale); border-style: solid; }
 
-  /* LIST BAR */
-  .list-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-  .list-bar h3 { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 600; color: var(--text); }
-  .clear-done-btn { background: none; border: none; color: var(--orange); font-size: 0.8rem; font-weight: 600; cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: background 0.15s; }
+  /* SORT / ACTIONS BAR */
+  .list-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .list-bar h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .clear-done-btn {
+    background: none;
+    border: none;
+    color: var(--orange);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
   .clear-done-btn:hover { background: var(--orange-pale); }
 
-  /* ITEMS */
+  /* SHOPPING ITEMS */
   .items-list { display: flex; flex-direction: column; gap: 10px; }
-  .store-group-header { display: flex; align-items: center; gap: 8px; margin: 16px 0 6px; }
+
+  .store-group-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 16px 0 6px;
+  }
   .store-group-header:first-child { margin-top: 0; }
-  .store-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .store-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
   .store-badge.kosher { background: var(--blue-pale); color: var(--blue); }
   .store-badge.super { background: var(--green-pale); color: var(--green); }
   .store-badge.other { background: var(--purple-pale); color: var(--purple); }
   .store-divider { flex: 1; height: 1px; background: var(--border); }
-  .item-card { background: var(--card); border-radius: 14px; border: 1.5px solid var(--border); padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; box-shadow: var(--shadow); transition: all 0.2s; cursor: pointer; }
+
+  .item-card {
+    background: var(--card);
+    border-radius: 14px;
+    border: 1.5px solid var(--border);
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    box-shadow: var(--shadow);
+    transition: all 0.2s;
+    cursor: pointer;
+    position: relative;
+  }
   .item-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
-  .item-card.done { opacity: 0.55; background: #f7f7f5; transform: none !important; box-shadow: none !important; }
+  .item-card.done {
+    opacity: 0.55;
+    background: #f7f7f5;
+    transform: none !important;
+    box-shadow: none !important;
+  }
   .item-card.done .item-name { text-decoration: line-through; color: var(--gray); }
-  .check-wrap { flex-shrink: 0; margin-top: 2px; }
-  .check-circle { width: 26px; height: 26px; border-radius: 50%; border: 2.5px solid var(--border); display: flex; align-items: center; justify-content: center; transition: all 0.18s; background: #fff; }
-  .item-card.done .check-circle { background: var(--green); border-color: var(--green); }
+
+  /* Checkbox */
+  .check-wrap {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .check-circle {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.18s;
+    background: #fff;
+  }
+  .item-card.done .check-circle {
+    background: var(--green);
+    border-color: var(--green);
+  }
   .check-icon { display: none; color: #fff; font-size: 0.85rem; font-weight: 700; }
   .item-card.done .check-icon { display: block; }
-  .uncheck-icon { color: var(--gray); font-size: 0.7rem; }
+  .check-circle .uncheck-icon { color: var(--gray); font-size: 0.7rem; }
   .item-card.done .uncheck-icon { display: none; }
+
+  /* Item body */
   .item-body { flex: 1; min-width: 0; }
   .item-top { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-  .item-name { font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 600; color: var(--text); }
-  .item-qty { font-size: 0.8rem; font-weight: 600; padding: 2px 9px; border-radius: 20px; background: var(--orange-pale); color: var(--orange); flex-shrink: 0; }
-  .item-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; align-items: center; }
-  .item-store { font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .item-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .item-qty {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 2px 9px;
+    border-radius: 20px;
+    background: var(--orange-pale);
+    color: var(--orange);
+    flex-shrink: 0;
+  }
+  .item-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+    align-items: center;
+  }
+  .item-store {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
   .item-store.kosher { background: var(--blue-pale); color: var(--blue); }
   .item-store.super { background: var(--green-pale); color: var(--green); }
   .item-store.other { background: var(--purple-pale); color: var(--purple); }
-  .item-note { font-size: 0.78rem; color: var(--gray); font-style: italic; }
-  .item-added-by { font-size: 0.72rem; color: #aaa; margin-top: 4px; }
-  .delete-btn { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; border: none; background: none; color: #ccc; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; margin-top: 1px; }
-  .delete-btn:hover { background: var(--orange-pale); color: var(--orange); }
-  .scanned-badge { font-size: 0.7rem; background: #fff3cd; color: #856404; border-radius: 10px; padding: 1px 7px; font-weight: 600; }
 
-  /* EMPTY */
-  .empty { text-align: center; padding: 48px 20px; color: var(--gray); }
+  .item-note {
+    font-size: 0.78rem;
+    color: var(--gray);
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .item-added-by {
+    font-size: 0.72rem;
+    color: #aaa;
+    margin-top: 4px;
+  }
+
+  /* Delete btn */
+  .delete-btn {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: none;
+    color: #ccc;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    margin-top: 1px;
+  }
+  .delete-btn:hover { background: var(--orange-pale); color: var(--orange); }
+
+  /* Empty state */
+  .empty {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--gray);
+  }
   .empty .emoji { font-size: 3rem; margin-bottom: 12px; }
   .empty p { font-size: 0.95rem; }
 
-  /* TOAST */
-  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--green); color: #fff; padding: 10px 22px; border-radius: 30px; font-size: 0.88rem; font-weight: 600; box-shadow: 0 4px 20px rgba(0,0,0,0.18); z-index: 9999; transition: transform 0.3s cubic-bezier(.34,1.56,.64,1); pointer-events: none; }
-  .toast.show { transform: translateX(-50%) translateY(0); }
-
-  /* MODAL */
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 500; align-items: flex-end; justify-content: center; }
-  .modal-overlay.open { display: flex; animation: fadeIn 0.2s; }
-  @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
-  .modal { background: var(--card); border-radius: 24px 24px 0 0; padding: 24px 20px 32px; width: 100%; max-width: 640px; max-height: 90vh; overflow-y: auto; animation: slideUp 0.3s cubic-bezier(.34,1.1,.64,1); }
-  @keyframes slideUp { from { transform: translateY(100%) } to { transform: translateY(0) } }
-  .modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 4px; margin: 0 auto 20px; }
-  .modal h2 { font-family: 'Fraunces', serif; font-size: 1.2rem; color: var(--green); margin-bottom: 6px; font-weight: 700; }
-  .modal-sub { font-size: 0.85rem; color: var(--gray); margin-bottom: 20px; line-height: 1.5; }
-
-  /* UPLOAD BUTTONS */
-  .upload-btn {
-    display: flex; align-items: center; gap: 14px;
-    width: 100%; padding: 16px 18px; margin-bottom: 10px;
-    border-radius: 14px; border: 1.5px solid var(--border);
-    background: #fff; cursor: pointer; text-align: left;
-    font-family: 'DM Sans', sans-serif; transition: all 0.15s;
-    text-decoration: none; color: inherit;
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--green);
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+    z-index: 999;
+    transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
+    pointer-events: none;
   }
-  .upload-btn:hover { border-color: var(--green); background: var(--green-pale); }
-  .upload-btn .btn-icon { font-size: 1.8rem; flex-shrink: 0; }
-  .upload-btn strong { display: block; font-size: 0.95rem; color: var(--text); margin-bottom: 1px; }
-  .upload-btn span { font-size: 0.78rem; color: var(--gray); }
-
-  /* PREVIEW */
-  .preview-wrap { position: relative; margin-bottom: 16px; }
-  .preview-wrap img { width: 100%; border-radius: 12px; max-height: 300px; object-fit: contain; background: #f0ede6; display: block; }
-  .preview-clear { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-
-  /* SCANNING */
-  .scanning-state { text-align: center; padding: 24px 0; }
-  .spinner { width: 44px; height: 44px; border: 3px solid var(--border); border-top-color: var(--green); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 14px; }
-  @keyframes spin { to { transform: rotate(360deg) } }
-  .scanning-state p { color: var(--gray); font-size: 0.9rem; }
-
-  /* SCAN RESULTS */
-  .scan-results-header { font-family: 'Fraunces', serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 10px; color: var(--text); }
-  .scan-item { background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; transition: opacity 0.2s; }
-  .scan-item.excluded { opacity: 0.4; }
-  .scan-item-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-  .scan-check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; background: #fff; font-size: 0.75rem; font-weight: 700; color: #fff; }
-  .scan-check.on { background: var(--green); border-color: var(--green); }
-  .scan-name { flex: 1; font-family: 'Fraunces', serif; font-size: 0.95rem; font-weight: 600; border: none; background: transparent; outline: none; color: var(--text); padding: 0; width: 100%; }
-  .scan-name:focus { color: var(--green); }
-  .scan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .scan-grid select, .scan-grid input { font-size: 0.82rem; padding: 6px 10px; }
-  .scan-note { width: 100%; font-size: 0.82rem; padding: 6px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'DM Sans', sans-serif; outline: none; margin-top: 6px; color: var(--text); background: #fff; }
-  .scan-note:focus { border-color: var(--green); }
-
-  /* MODAL ACTIONS */
-  .modal-actions { display: flex; gap: 10px; margin-top: 8px; }
-  .btn-cancel { flex: 1; padding: 11px; background: #fff; color: var(--gray); border: 1.5px solid var(--border); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
-  .btn-confirm { flex: 2; padding: 11px; background: var(--green); color: #fff; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: background 0.15s; }
-  .btn-confirm:hover { background: #235e44; }
-  .btn-confirm:disabled { background: #9dbfb0; cursor: not-allowed; }
-  .btn-go { width: 100%; padding: 12px; background: var(--green); color: #fff; border: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .btn-go:hover { background: #235e44; }
-  .error-msg { background: var(--orange-pale); color: var(--orange); border-radius: 10px; padding: 10px 14px; font-size: 0.85rem; margin-bottom: 12px; }
-  .hint-tip { font-size: 0.78rem; color: var(--gray); margin-bottom: 14px; line-height: 1.5; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
 
   @media (max-width: 420px) {
     .form-grid { grid-template-columns: 1fr; }
     .form-grid .full { grid-column: 1; }
     .header h1 { font-size: 1.3rem; }
-    .scan-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -191,6 +419,8 @@
 </div>
 
 <div class="main">
+
+  <!-- ADD FORM -->
   <div class="add-card">
     <h2>+ Add item</h2>
     <div class="form-grid">
@@ -217,7 +447,7 @@
     </div>
     <div class="added-by-row">
       <label>Added by:</label>
-      <div class="family-btns">
+      <div class="family-btns" id="familyBtns">
         <button class="family-btn active" data-name="Me" onclick="selectMember(this)">Me</button>
         <button class="family-btn" data-name="Mum" onclick="selectMember(this)">Mum</button>
         <button class="family-btn" data-name="Dad" onclick="selectMember(this)">Dad</button>
@@ -226,361 +456,224 @@
       </div>
     </div>
     <button class="add-btn" onclick="addItem()">Add to list</button>
-    <button class="scan-btn" onclick="openScanModal()">📷 Scan a written list</button>
   </div>
 
+  <!-- LIST -->
   <div class="list-bar">
     <h3 id="listTitle">Shopping List</h3>
     <button class="clear-done-btn" onclick="clearDone()">Remove done ✓</button>
   </div>
+
   <div class="items-list" id="itemsList"></div>
+
   <div class="toast" id="toast"></div>
 </div>
 
-<!-- SCAN MODAL -->
-<div class="modal-overlay" id="scanModal" onclick="overlayClick(event)">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <h2>📷 Scan a written list</h2>
-
-    <!-- Step 1: choose input method -->
-    <div id="step-upload">
-      <p class="modal-sub">Take a photo of your handwritten list, or upload one from your gallery. Claude will read and extract every item.</p>
-
-      <!-- Camera button: label wraps a file input with capture -->
-      <label class="upload-btn">
-        <span class="btn-icon">📷</span>
-        <div>
-          <strong>Take a photo</strong>
-          <span>Open your camera</span>
-        </div>
-        <input type="file" accept="image/*" capture="environment"
-               style="display:none" onchange="handleFile(event)">
-      </label>
-
-      <!-- Gallery button: label wraps a file input without capture -->
-      <label class="upload-btn">
-        <span class="btn-icon">🖼️</span>
-        <div>
-          <strong>Choose from gallery</strong>
-          <span>Upload an existing photo</span>
-        </div>
-        <input type="file" accept="image/*"
-               style="display:none" onchange="handleFile(event)">
-      </label>
-
-      <p style="font-size:0.75rem;color:#bbb;text-align:center;margin-top:4px;">
-        Works with handwritten notes, printed lists, sticky notes
-      </p>
-      <div class="modal-actions" style="margin-top:16px">
-        <button class="btn-cancel" onclick="closeScanModal()">Cancel</button>
-      </div>
-    </div>
-
-    <!-- Step 2: preview -->
-    <div id="step-preview" style="display:none">
-      <div class="preview-wrap">
-        <img id="previewImg" src="" alt="Preview">
-        <button class="preview-clear" onclick="resetScan()">✕</button>
-      </div>
-      <div id="scanError" class="error-msg" style="display:none"></div>
-      <button class="btn-go" onclick="runScan()">✨ Extract items from this image</button>
-      <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeScanModal()">Cancel</button>
-      </div>
-    </div>
-
-    <!-- Step 3: scanning -->
-    <div id="step-scanning" style="display:none">
-      <div class="scanning-state">
-        <div class="spinner"></div>
-        <p>Reading your list…</p>
-      </div>
-    </div>
-
-    <!-- Step 4: review -->
-    <div id="step-results" style="display:none">
-      <div class="scan-results-header" id="resultsHeader"></div>
-      <div id="scanItems"></div>
-      <p class="hint-tip">✏️ Edit names · set where to buy · add notes · uncheck items you don't want</p>
-      <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeScanModal()">Cancel</button>
-        <button class="btn-confirm" id="confirmBtn" onclick="confirmScan()">Add to list →</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
-// ── STATE ──────────────────────────────────────────────────────
-const KEY = 'familyshop_v3';
-let items = [], filter = 'all', member = 'Me';
-let imgBase64 = null, scanItems = [];
+// ─── STATE ───────────────────────────────────────────────────
+const STORAGE_KEY = 'family_shopping_v2';
+let items = [];
+let filter = 'all';
+let selectedMember = 'Me';
 
 function load() {
-  try { items = JSON.parse(localStorage.getItem(KEY)) || []; } catch { items = []; }
-  if (!items.length) items = [
-    { id:1, name:'Whole milk',         qty:'2 bottles', store:'supermarket', note:'Full fat',          by:'Mum',   done:false, ts:Date.now()-5e3 },
-    { id:2, name:'Challah bread',      qty:'1 loaf',    store:'kosher',      note:'For Friday',        by:'Dad',   done:false, ts:Date.now()-4e3 },
-    { id:3, name:'Oat milk',           qty:'3 cartons', store:'supermarket', note:'Sugar-free only',   by:'Me',    done:false, ts:Date.now()-3e3 },
-    { id:4, name:'Organic baby spinach',qty:'1 bag',    store:'supermarket', note:'Organic brand only',by:'Simona',done:true,  ts:Date.now()-2e3 },
-  ];
+  try { items = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { items = []; }
+  if (!items.length) {
+    items = [
+      { id: 1, name: 'Whole milk', qty: '2 bottles', store: 'supermarket', note: 'Full fat', by: 'Mum', done: false, ts: Date.now()-5000 },
+      { id: 2, name: 'Challah bread', qty: '1 loaf', store: 'kosher', note: 'For Friday', by: 'Dad', done: false, ts: Date.now()-4000 },
+      { id: 3, name: 'Oat milk', qty: '3 cartons', store: 'supermarket', note: 'Sugar-free only', by: 'Me', done: false, ts: Date.now()-3000 },
+      { id: 4, name: 'Organic baby spinach', qty: '1 bag', store: 'supermarket', note: 'Organic brand only', by: 'Simona', done: true, ts: Date.now()-2000 },
+    ];
+  }
 }
-const save = () => localStorage.setItem(KEY, JSON.stringify(items));
+function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); }
 
-// ── MAIN LIST ──────────────────────────────────────────────────
+// ─── FAMILY MEMBER ───────────────────────────────────────────
 function selectMember(btn) {
   document.querySelectorAll('.family-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active'); member = btn.dataset.name;
+  btn.classList.add('active');
+  selectedMember = btn.dataset.name;
 }
+
+// ─── FILTER ──────────────────────────────────────────────────
 function setFilter(f, btn) {
   filter = f;
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active'); render();
+  btn.classList.add('active');
+  render();
 }
+
+// ─── ADD ITEM ────────────────────────────────────────────────
 function addItem() {
   const name = document.getElementById('f-name').value.trim();
-  if (!name) { flash('f-name'); return; }
-  items.unshift({ id: Date.now(), name,
-    qty:   document.getElementById('f-qty').value.trim(),
+  if (!name) { shake('f-name'); return; }
+  const item = {
+    id: Date.now(),
+    name,
+    qty: document.getElementById('f-qty').value.trim() || '',
     store: document.getElementById('f-store').value,
-    note:  document.getElementById('f-note').value.trim(),
-    by: member, done: false, ts: Date.now() });
-  save(); render();
-  ['f-name','f-qty','f-note'].forEach(id => document.getElementById(id).value = '');
+    note: document.getElementById('f-note').value.trim() || '',
+    by: selectedMember,
+    done: false,
+    ts: Date.now()
+  };
+  items.unshift(item);
+  save();
+  render();
+  // Reset
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-qty').value = '';
+  document.getElementById('f-note').value = '';
   toast('Added: ' + name);
 }
-function flash(id) {
+
+function shake(id) {
   const el = document.getElementById(id);
-  el.style.borderColor = 'var(--orange)'; el.focus();
-  setTimeout(() => el.style.borderColor = '', 1200);
+  el.style.borderColor = 'var(--orange)';
+  el.style.animation = 'none';
+  el.focus();
+  setTimeout(() => { el.style.borderColor = ''; }, 1200);
 }
+
+// ─── TOGGLE DONE ─────────────────────────────────────────────
 function toggleDone(id) {
-  const it = items.find(i => i.id === id);
-  if (it) { it.done = !it.done; save(); render(); }
+  const item = items.find(i => i.id === id);
+  if (item) { item.done = !item.done; save(); render(); }
 }
+
+// ─── DELETE ──────────────────────────────────────────────────
 function deleteItem(id, e) {
   e.stopPropagation();
   items = items.filter(i => i.id !== id);
-  save(); render(); toast('Removed');
+  save();
+  render();
+  toast('Item removed');
 }
+
+// ─── CLEAR DONE ──────────────────────────────────────────────
 function clearDone() {
-  const n = items.filter(i => i.done).length;
-  if (!n) return;
+  const count = items.filter(i => i.done).length;
+  if (!count) return;
   items = items.filter(i => !i.done);
-  save(); render(); toast(`Cleared ${n} done item${n>1?'s':''}`);
+  save();
+  render();
+  toast(`Cleared ${count} done item${count > 1 ? 's' : ''}`);
 }
 
-// ── SCAN MODAL ─────────────────────────────────────────────────
-function openScanModal()  { document.getElementById('scanModal').classList.add('open'); showStep('upload'); }
-function closeScanModal() { document.getElementById('scanModal').classList.remove('open'); resetScan(); }
-function overlayClick(e)  { if (e.target === document.getElementById('scanModal')) closeScanModal(); }
+// ─── RENDER ──────────────────────────────────────────────────
+const storeLabels = { kosher: '🔵 Kosher shop', supermarket: '🟢 Supermarket', other: '🟣 Other' };
+const storeClass  = { kosher: 'kosher', supermarket: 'super', other: 'other' };
 
-function showStep(s) {
-  ['upload','preview','scanning','results'].forEach(n =>
-    document.getElementById('step-'+n).style.display = n===s ? 'block' : 'none');
-}
-function resetScan() {
-  imgBase64 = null; scanItems = [];
-  document.getElementById('previewImg').src = '';
-  const err = document.getElementById('scanError');
-  err.style.display = 'none'; err.textContent = '';
-  showStep('upload');
-}
-
-function handleFile(e) {
-  const file = e.target.files && e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    imgBase64 = ev.target.result.split(',')[1];
-    document.getElementById('previewImg').src = ev.target.result;
-    showStep('preview');
-  };
-  reader.readAsDataURL(file);
-}
-
-async function runScan() {
-  if (!imgBase64) return;
-  showStep('scanning');
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: [
-          { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: imgBase64 } },
-          { type: 'text', text: `Extract every item from this shopping list image.
-Return ONLY a JSON array, no markdown, no explanation:
-[{"name":"item name","qty":"quantity or empty","note":"any qualifier/note or empty"}]
-Rules: title-case names, split quantity from name, translate non-English to English.` }
-        ]}]
-      })
-    });
-    if (!res.ok) throw new Error('API error ' + res.status);
-    const data = await res.json();
-    const raw = data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
-    let parsed;
-    try { parsed = JSON.parse(raw.replace(/```json|```/g,'').trim()); }
-    catch { throw new Error('Could not read the list. Try a clearer, well-lit photo.'); }
-    if (!Array.isArray(parsed) || !parsed.length) throw new Error('No items found. Try a clearer photo.');
-    scanItems = parsed.map((p,i) => ({
-      i, name:(p.name||'').trim(), qty:(p.qty||'').trim(),
-      note:(p.note||'').trim(), store:'supermarket', on:true
-    })).filter(s=>s.name);
-    if (!scanItems.length) throw new Error('No readable items found.');
-    renderScanResults(); showStep('results');
-  } catch(err) {
-    showStep('preview');
-    const el = document.getElementById('scanError');
-    el.textContent = '⚠️ ' + (err.message || 'Something went wrong.');
-    el.style.display = 'block';
+function filteredItems() {
+  switch(filter) {
+    case 'todo': return items.filter(i => !i.done);
+    case 'done': return items.filter(i => i.done);
+    case 'kosher': return items.filter(i => i.store === 'kosher' && !i.done);
+    case 'supermarket': return items.filter(i => i.store === 'supermarket' && !i.done);
+    case 'other': return items.filter(i => i.store === 'other' && !i.done);
+    default: return [...items];
   }
-}
-
-function renderScanResults() {
-  document.getElementById('resultsHeader').textContent =
-    `Found ${scanItems.length} item${scanItems.length!==1?'s':''} — review before adding:`;
-  document.getElementById('scanItems').innerHTML = scanItems.map((s,i) => `
-    <div class="scan-item" id="si-${i}">
-      <div class="scan-item-top">
-        <div class="scan-check on" id="sc-${i}" onclick="toggleScan(${i})">✓</div>
-        <input class="scan-name" value="${esc(s.name)}" oninput="scanItems[${i}].name=this.value" placeholder="Item name">
-      </div>
-      <div class="scan-grid">
-        <div><label>Quantity</label>
-          <input type="text" value="${esc(s.qty)}" oninput="scanItems[${i}].qty=this.value" placeholder="e.g. 2 packs">
-        </div>
-        <div><label>Where to buy</label>
-          <select onchange="scanItems[${i}].store=this.value">
-            <option value="supermarket">🟢 Supermarket</option>
-            <option value="kosher">🔵 Kosher shop</option>
-            <option value="other">🟣 Other</option>
-          </select>
-        </div>
-      </div>
-      <input class="scan-note" type="text" value="${esc(s.note)}"
-        oninput="scanItems[${i}].note=this.value"
-        placeholder="Notes (organic, sugar-free…)">
-    </div>`).join('');
-  updateConfirm();
-}
-
-function toggleScan(i) {
-  scanItems[i].on = !scanItems[i].on;
-  document.getElementById('si-'+i).classList.toggle('excluded', !scanItems[i].on);
-  const c = document.getElementById('sc-'+i);
-  c.classList.toggle('on', scanItems[i].on);
-  c.textContent = scanItems[i].on ? '✓' : '';
-  updateConfirm();
-}
-function updateConfirm() {
-  const n = scanItems.filter(s=>s.on).length;
-  const btn = document.getElementById('confirmBtn');
-  btn.textContent = n ? `Add ${n} item${n!==1?'s':''} to list →` : 'No items selected';
-  btn.disabled = !n;
-}
-function confirmScan() {
-  scanItems.filter(s=>s.on && s.name.trim()).forEach(s => {
-    items.unshift({ id: Date.now()+Math.random(), name:s.name.trim(),
-      qty:s.qty.trim(), store:s.store, note:s.note.trim(),
-      by:member, done:false, ts:Date.now(), scanned:true });
-  });
-  const n = scanItems.filter(s=>s.on).length;
-  save(); render(); closeScanModal();
-  toast(`✨ Added ${n} scanned item${n!==1?'s':''}`);
-}
-
-// ── RENDER ─────────────────────────────────────────────────────
-const SL = { kosher:'🔵 Kosher shop', supermarket:'🟢 Supermarket', other:'🟣 Other' };
-const SC = { kosher:'kosher', supermarket:'super', other:'other' };
-
-function getVisible() {
-  if (filter==='todo')        return items.filter(i=>!i.done);
-  if (filter==='done')        return items.filter(i=>i.done);
-  if (filter==='kosher')      return items.filter(i=>i.store==='kosher'&&!i.done);
-  if (filter==='supermarket') return items.filter(i=>i.store==='supermarket'&&!i.done);
-  if (filter==='other')       return items.filter(i=>i.store==='other'&&!i.done);
-  return [...items];
 }
 
 function render() {
   const list = document.getElementById('itemsList');
-  const vis  = getVisible();
-  const tot  = items.length, dn = items.filter(i=>i.done).length;
-  document.getElementById('totalPill').textContent = tot+' item'+(tot!==1?'s':'');
-  document.getElementById('donePill').textContent  = dn+' done';
-  const titles = {all:'Shopping List',todo:'Still to Buy',done:'Done ✓',kosher:'Kosher Shop',supermarket:'Supermarket',other:'Other'};
-  document.getElementById('listTitle').textContent = titles[filter]||'Shopping List';
+  const visible = filteredItems();
+  const total = items.length;
+  const done  = items.filter(i => i.done).length;
 
-  if (!vis.length) {
-    list.innerHTML = `<div class="empty"><div class="emoji">${filter==='done'?'✅':'🛍️'}</div><p>${filter==='done'?'Nothing done yet!':'No items yet.'}</p></div>`;
+  document.getElementById('totalPill').textContent = total + ' item' + (total !== 1 ? 's' : '');
+  document.getElementById('donePill').textContent  = done  + ' done';
+
+  const titles = { all:'Shopping List', todo:'Still to Buy', done:'Done ✓', kosher:'Kosher Shop', supermarket:'Supermarket', other:'Other' };
+  document.getElementById('listTitle').textContent = titles[filter] || 'Shopping List';
+
+  if (!visible.length) {
+    list.innerHTML = `<div class="empty"><div class="emoji">${filter === 'done' ? '✅' : '🛍️'}</div><p>${filter === 'done' ? 'Nothing done yet!' : 'No items here yet.'}</p></div>`;
     return;
   }
 
+  // Group by store (only for 'all' and 'todo' views)
+  const grouped = filter === 'all' || filter === 'todo';
   let html = '';
-  const grouped = filter==='all'||filter==='todo';
+
   if (grouped) {
-    ['kosher','supermarket','other'].forEach(store => {
-      const grp = vis.filter(i=>i.store===store&&!i.done);
-      if (!grp.length) return;
-      html += `<div class="store-group-header"><span class="store-badge ${SC[store]}">${SL[store]}</span><span class="store-divider"></span></div>`;
-      grp.forEach(it => html += card(it));
+    const order = ['kosher', 'supermarket', 'other'];
+    const groups = {};
+    order.forEach(s => { groups[s] = visible.filter(i => i.store === s && !i.done); });
+    const doneItems = visible.filter(i => i.done);
+
+    order.forEach(store => {
+      if (!groups[store].length) return;
+      const sc = storeClass[store];
+      html += `<div class="store-group-header">
+        <span class="store-badge ${sc}">${storeLabels[store]}</span>
+        <span class="store-divider"></span>
+      </div>`;
+      groups[store].forEach(item => { html += itemHTML(item); });
     });
-    const done = vis.filter(i=>i.done);
-    if (done.length && filter==='all') {
-      html += `<div class="store-group-header"><span class="store-badge" style="background:#f0f0ec;color:#999">✅ Done</span><span class="store-divider"></span></div>`;
-      done.forEach(it => html += card(it));
+
+    if (doneItems.length && filter === 'all') {
+      html += `<div class="store-group-header">
+        <span class="store-badge" style="background:#f0f0ec;color:#999;">✅ Done</span>
+        <span class="store-divider"></span>
+      </div>`;
+      doneItems.forEach(item => { html += itemHTML(item); });
     }
   } else {
-    vis.forEach(it => html += card(it));
+    visible.forEach(item => { html += itemHTML(item); });
   }
+
   list.innerHTML = html;
 }
 
-function card(it) {
+function itemHTML(item) {
+  const sc = storeClass[item.store];
   return `
-  <div class="item-card ${it.done?'done':''}" onclick="toggleDone(${it.id})">
-    <div class="check-wrap"><div class="check-circle">
-      <span class="check-icon">✓</span><span class="uncheck-icon">○</span>
-    </div></div>
+  <div class="item-card ${item.done ? 'done' : ''}" onclick="toggleDone(${item.id})">
+    <div class="check-wrap">
+      <div class="check-circle">
+        <span class="check-icon">✓</span>
+        <span class="uncheck-icon">○</span>
+      </div>
+    </div>
     <div class="item-body">
       <div class="item-top">
-        <span class="item-name">${esc(it.name)}</span>
-        ${it.qty?`<span class="item-qty">${esc(it.qty)}</span>`:''}
-        ${it.scanned?`<span class="scanned-badge">📷 scanned</span>`:''}
+        <span class="item-name">${escHtml(item.name)}</span>
+        ${item.qty ? `<span class="item-qty">${escHtml(item.qty)}</span>` : ''}
       </div>
       <div class="item-meta">
-        <span class="item-store ${SC[it.store]}">${SL[it.store]}</span>
-        ${it.note?`<span class="item-note">💬 ${esc(it.note)}</span>`:''}
+        <span class="item-store ${sc}">${storeLabels[item.store]}</span>
+        ${item.note ? `<span class="item-note">💬 ${escHtml(item.note)}</span>` : ''}
       </div>
-      <div class="item-added-by">Added by ${esc(it.by)}</div>
+      <div class="item-added-by">Added by ${escHtml(item.by)}</div>
     </div>
-    <button class="delete-btn" onclick="deleteItem(${it.id},event)">✕</button>
+    <button class="delete-btn" onclick="deleteItem(${item.id},event)" title="Remove">✕</button>
   </div>`;
 }
 
-function esc(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-let toastT;
+// ─── TOAST ───────────────────────────────────────────────────
+let toastTimer;
 function toast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  clearTimeout(toastT);
-  toastT = setTimeout(() => t.classList.remove('show'), 2500);
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
 }
 
+// ─── ENTER KEY ───────────────────────────────────────────────
 document.addEventListener('keydown', e => {
-  if (e.key==='Enter' && e.target.id==='f-name') addItem();
-  if (e.key==='Escape') closeScanModal();
+  if (e.key === 'Enter' && e.target.id === 'f-name') addItem();
 });
 
-load(); render();
+// ─── INIT ────────────────────────────────────────────────────
+load();
+render();
 </script>
 </body>
 </html>
-
