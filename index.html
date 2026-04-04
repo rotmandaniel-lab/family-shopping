@@ -502,6 +502,9 @@ function runScan() {
     });
   }).then(function(data) {
     var raw = '';
+    if (!data || !data.content) {
+      throw new Error('Unexpected response: ' + JSON.stringify(data).slice(0, 200));
+    }
     for (var i = 0; i < data.content.length; i++) {
       if (data.content[i].type === 'text') raw += data.content[i].text;
     }
