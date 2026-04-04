@@ -41,7 +41,6 @@ textarea { resize:none; height:60px; line-height:1.4; }
 .family-btn { padding:5px 13px; border-radius:20px; border:1.5px solid var(--border); background:#fff; font-size:0.8rem; font-weight:500; cursor:pointer; color:var(--gray); }
 .family-btn.active { border-color:var(--green); background:var(--green-pale); color:var(--green); font-weight:600; }
 .add-btn { width:100%; padding:11px; background:var(--green); color:#fff; border:none; border-radius:12px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; margin-top:4px; }
-.scan-trigger { width:100%; padding:11px; background:#fff; color:var(--green); border:2px dashed var(--green); border-radius:12px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; margin-top:8px; }
 .list-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
 .list-bar h3 { font-family:'Fraunces',serif; font-size:1rem; font-weight:600; }
 .clear-btn { background:none; border:none; color:var(--orange); font-size:0.8rem; font-weight:600; cursor:pointer; padding:4px 8px; border-radius:6px; }
@@ -53,6 +52,8 @@ textarea { resize:none; height:60px; line-height:1.4; }
 .store-badge.s { background:var(--green-pale); color:var(--green); }
 .store-badge.o { background:var(--purple-pale); color:var(--purple); }
 .store-badge.d { background:#f0f0ec; color:#999; }
+.store-badge.a { background:#fff3cd; color:#b45309; }
+.item-store.a { background:#fff3cd; color:#b45309; }
 .divider { flex:1; height:1px; background:var(--border); }
 .item-card { background:var(--card); border-radius:14px; border:1.5px solid var(--border); padding:14px 16px; display:flex; align-items:flex-start; gap:12px; box-shadow:var(--shadow); cursor:pointer; }
 .item-card.done { opacity:0.55; background:#f7f7f5; }
@@ -70,47 +71,27 @@ textarea { resize:none; height:60px; line-height:1.4; }
 .item-store.o { background:var(--purple-pale); color:var(--purple); }
 .item-note { font-size:0.78rem; color:var(--gray); font-style:italic; }
 .item-by { font-size:0.72rem; color:#aaa; margin-top:4px; }
-.scan-badge { font-size:0.7rem; background:#fff3cd; color:#856404; border-radius:10px; padding:1px 7px; font-weight:600; }
 .del-btn { flex-shrink:0; width:28px; height:28px; border-radius:50%; border:none; background:none; color:#ccc; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; }
 .del-btn:hover { background:var(--orange-pale); color:var(--orange); }
 .empty { text-align:center; padding:48px 20px; color:var(--gray); font-size:0.95rem; }
 .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--green); color:#fff; padding:10px 22px; border-radius:30px; font-size:0.88rem; font-weight:600; box-shadow:0 4px 20px rgba(0,0,0,0.18); z-index:9999; transition:transform 0.3s ease; pointer-events:none; }
 .toast.show { transform:translateX(-50%) translateY(0); }
-.overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:500; align-items:flex-end; justify-content:center; }
 .overlay.open { display:flex; }
-.modal { background:var(--card); border-radius:24px 24px 0 0; padding:24px 20px 32px; width:100%; max-width:640px; max-height:90vh; overflow-y:auto; }
 .modal-handle { width:40px; height:4px; background:var(--border); border-radius:4px; margin:0 auto 20px; }
 .modal h2 { font-family:'Fraunces',serif; font-size:1.2rem; color:var(--green); margin-bottom:6px; font-weight:700; }
 .modal-sub { font-size:0.85rem; color:var(--gray); margin-bottom:16px; line-height:1.5; }
-.upload-label { display:flex; align-items:center; gap:14px; width:100%; padding:16px 18px; margin-bottom:10px; border-radius:14px; border:1.5px solid var(--border); background:#fff; cursor:pointer; font-family:'DM Sans',sans-serif; }
 .upload-label:hover { border-color:var(--green); background:var(--green-pale); }
 .upload-label .ico { font-size:1.8rem; flex-shrink:0; }
 .upload-label strong { display:block; font-size:0.95rem; color:var(--text); margin-bottom:1px; }
 .upload-label small { font-size:0.78rem; color:var(--gray); }
-.prev-wrap { position:relative; margin-bottom:16px; }
 .prev-wrap img { width:100%; border-radius:12px; max-height:300px; object-fit:contain; background:#f0ede6; display:block; }
 .prev-clear { position:absolute; top:8px; right:8px; background:rgba(0,0,0,0.5); color:#fff; border:none; border-radius:50%; width:28px; height:28px; cursor:pointer; }
-.spinner-wrap { text-align:center; padding:32px 0; }
-.spinner { width:44px; height:44px; border:3px solid var(--border); border-top-color:var(--green); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 14px; }
-@keyframes spin { to { transform:rotate(360deg); } }
-.res-header { font-family:'Fraunces',serif; font-size:0.95rem; font-weight:600; margin-bottom:10px; }
-.scan-item { background:#fff; border:1.5px solid var(--border); border-radius:12px; padding:12px 14px; margin-bottom:8px; transition:opacity 0.2s; }
 .scan-item.off { opacity:0.4; }
 .scan-item-top { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
-.scan-chk { width:22px; height:22px; border-radius:6px; border:2px solid var(--border); cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; background:#fff; font-size:0.75rem; font-weight:700; color:#fff; }
 .scan-chk.on { background:var(--green); border-color:var(--green); }
-.scan-name { flex:1; font-family:'Fraunces',serif; font-size:0.95rem; font-weight:600; border:none; background:transparent; outline:none; color:var(--text); padding:0; width:100%; }
-.scan-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
 .scan-grid select, .scan-grid input { font-size:0.82rem; padding:6px 10px; }
-.scan-note { width:100%; font-size:0.82rem; padding:6px 10px; border:1.5px solid var(--border); border-radius:8px; font-family:'DM Sans',sans-serif; outline:none; margin-top:6px; color:var(--text); background:#fff; }
 .modal-actions { display:flex; gap:10px; margin-top:8px; }
-.btn-cancel { flex:1; padding:11px; background:#fff; color:var(--gray); border:1.5px solid var(--border); border-radius:12px; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:600; cursor:pointer; }
-.btn-confirm { flex:2; padding:11px; background:var(--green); color:#fff; border:none; border-radius:12px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; }
 .btn-confirm:disabled { background:#9dbfb0; cursor:not-allowed; }
-.btn-go { width:100%; padding:12px; background:var(--green); color:#fff; border:none; border-radius:12px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; margin-top:4px; }
-.err-box { background:var(--orange-pale); color:var(--orange); border-radius:10px; padding:10px 14px; font-size:0.85rem; margin-bottom:12px; }
-.key-note { font-size:0.72rem; color:#aaa; margin-top:4px; margin-bottom:12px; }
-.hint { font-size:0.78rem; color:var(--gray); margin-bottom:14px; }
 @media (max-width:420px) {
   .form-grid { grid-template-columns:1fr; }
   .form-grid .full { grid-column:1; }
@@ -130,10 +111,10 @@ textarea { resize:none; height:60px; line-height:1.4; }
   </div>
   <div class="filter-tabs">
     <button class="tab active" onclick="setFilter('all',this)">All</button>
-    <button class="tab" onclick="setFilter('todo',this)">Still to buy</button>
     <button class="tab" onclick="setFilter('kosher',this)">&#128309; Kosher</button>
     <button class="tab" onclick="setFilter('supermarket',this)">&#128994; Supermarket</button>
     <button class="tab" onclick="setFilter('other',this)">&#128995; Other</button>
+    <button class="tab" onclick="setFilter('amazon',this)">Amazon</button>
     <button class="tab" onclick="setFilter('done',this)">&#9989; Done</button>
   </div>
 </div>
@@ -156,6 +137,7 @@ textarea { resize:none; height:60px; line-height:1.4; }
           <option value="supermarket">Supermarket</option>
           <option value="kosher">Kosher shop</option>
           <option value="other">Other</option>
+          <option value="amazon">Amazon</option>
         </select>
       </div>
       <div class="full">
@@ -166,15 +148,14 @@ textarea { resize:none; height:60px; line-height:1.4; }
     <div class="by-row">
       <label>Added by:</label>
       <div class="family-btns">
-        <button class="family-btn active" data-name="Me" onclick="selectMember(this)">Me</button>
-        <button class="family-btn" data-name="Mum" onclick="selectMember(this)">Mum</button>
-        <button class="family-btn" data-name="Dad" onclick="selectMember(this)">Dad</button>
-        <button class="family-btn" data-name="Yael" onclick="selectMember(this)">Yael</button>
-        <button class="family-btn" data-name="Simona" onclick="selectMember(this)">Simona</button>
+        <button class="family-btn active" data-name="Ima" onclick="selectMember(this)">Ima</button>
+        <button class="family-btn" data-name="Aba" onclick="selectMember(this)">Aba</button>
+        <button class="family-btn" data-name="Yaeli" onclick="selectMember(this)">Yaeli</button>
+        <button class="family-btn" data-name="Hannah" onclick="selectMember(this)">Hannah</button>
       </div>
     </div>
     <button class="add-btn" onclick="addItem()">Add to list</button>
-    <button class="scan-trigger" onclick="openModal()">&#128247; Scan a written list</button>
+    
   </div>
 
   <div class="list-bar">
@@ -185,85 +166,26 @@ textarea { resize:none; height:60px; line-height:1.4; }
   <div class="toast" id="toast"></div>
 </div>
 
-<div class="overlay" id="overlay" onclick="overlayClick(event)">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <h2>&#128247; Scan a written list</h2>
 
-    <div id="step1">
-      <p class="modal-sub">Take a photo of your handwritten list or upload one. Claude will extract every item.</p>
-      
-      
-      
-
-      <label class="upload-label">
-        <span class="ico">&#128247;</span>
-        <div><strong>Take a photo</strong><small>Open camera</small></div>
-        <input type="file" accept="image/*" capture="environment" style="display:none" onchange="handleFile(event)">
-      </label>
-
-      <label class="upload-label">
-        <span class="ico">&#128444;</span>
-        <div><strong>Choose from gallery</strong><small>Upload existing photo</small></div>
-        <input type="file" accept="image/*" style="display:none" onchange="handleFile(event)">
-      </label>
-
-      <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      </div>
-    </div>
-
-    <div id="step2" style="display:none">
-      <div class="prev-wrap">
-        <img id="prevImg" src="" alt="Preview">
-        <button class="prev-clear" onclick="goBack()">X</button>
-      </div>
-      <div id="errBox" class="err-box" style="display:none"></div>
-      <button class="btn-go" onclick="runScan()">Extract items from this image</button>
-      <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      </div>
-    </div>
-
-    <div id="step3" style="display:none">
-      <div class="spinner-wrap">
-        <div class="spinner"></div>
-        <p style="color:var(--gray);font-size:0.9rem;">Reading your list...</p>
-      </div>
-    </div>
-
-    <div id="step4" style="display:none">
-      <div class="res-header" id="resHeader"></div>
-      <div id="resItems"></div>
-      <p class="hint">Edit names, set store, add notes. Uncheck items you do not want.</p>
-      <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-        <button class="btn-confirm" id="confirmBtn" onclick="confirmScan()">Add to list</button>
-      </div>
-    </div>
-  </div>
 </div>
 
 <script>
 var SKEY = 'familyshop_v4';
 var items = [];
 var curFilter = 'all';
-var curMember = 'Me';
-var imgB64 = null;
-var imgMime = 'image/jpeg';
-var scanData = [];
+var curMember = 'Ima';
 
-var SL = { kosher:'Kosher shop', supermarket:'Supermarket', other:'Other' };
-var SC = { kosher:'k', supermarket:'s', other:'o' };
+var SL = { kosher:'Kosher shop', supermarket:'Supermarket', other:'Other', amazon:'Amazon' };
+var SC = { kosher:'k', supermarket:'s', other:'o', amazon:'a' };
 
 function loadData() {
   try { items = JSON.parse(localStorage.getItem(SKEY)) || []; } catch(e) { items = []; }
   if (!items.length) {
     items = [
-      { id:1, name:'Whole milk', qty:'2 bottles', store:'supermarket', note:'Full fat', by:'Mum', done:false },
-      { id:2, name:'Challah bread', qty:'1 loaf', store:'kosher', note:'For Friday', by:'Dad', done:false },
-      { id:3, name:'Oat milk', qty:'3 cartons', store:'supermarket', note:'Sugar-free only', by:'Me', done:false },
-      { id:4, name:'Organic baby spinach', qty:'1 bag', store:'supermarket', note:'Organic only', by:'Simona', done:true }
+      { id:1, name:'Whole milk', qty:'2 bottles', store:'supermarket', note:'Full fat', by:'Ima', done:false },
+      { id:2, name:'Challah bread', qty:'1 loaf', store:'kosher', note:'For Friday', by:'Aba', done:false },
+      { id:3, name:'Oat milk', qty:'3 cartons', store:'supermarket', note:'Sugar-free only', by:'Ima', done:false },
+      { id:4, name:'Organic baby spinach', qty:'1 bag', store:'supermarket', note:'Organic only', by:'Ima', done:true }
     ];
   }
 }
@@ -342,10 +264,12 @@ function getVisible() {
   for (var i = 0; i < items.length; i++) {
     var it = items[i];
     if (curFilter === 'todo' && it.done) continue;
+    if (curFilter === 'all' && it.done) continue;
     if (curFilter === 'done' && !it.done) continue;
     if (curFilter === 'kosher' && (it.store !== 'kosher' || it.done)) continue;
     if (curFilter === 'supermarket' && (it.store !== 'supermarket' || it.done)) continue;
     if (curFilter === 'other' && (it.store !== 'other' || it.done)) continue;
+    if (curFilter === 'amazon' && (it.store !== 'amazon' || it.done)) continue;
     out.push(it);
   }
   return out;
@@ -360,7 +284,7 @@ function render() {
 
   document.getElementById('totalPill').textContent = total + ' item' + (total !== 1 ? 's' : '');
   document.getElementById('donePill').textContent = done + ' done';
-  var titles = { all:'Shopping List', todo:'Still to Buy', done:'Done', kosher:'Kosher Shop', supermarket:'Supermarket', other:'Other' };
+  var titles = { all:'Shopping List', done:'Done', kosher:'Kosher Shop', supermarket:'Supermarket', other:'Other', amazon:'Amazon' };
   document.getElementById('listTitle').textContent = titles[curFilter] || 'Shopping List';
 
   if (!vis.length) {
@@ -372,7 +296,7 @@ function render() {
   var grouped = (curFilter === 'all' || curFilter === 'todo');
 
   if (grouped) {
-    var stores = ['kosher', 'supermarket', 'other'];
+    var stores = ['kosher', 'supermarket', 'amazon', 'other'];
     for (var s = 0; s < stores.length; s++) {
       var store = stores[s];
       var grp = [];
@@ -380,14 +304,6 @@ function render() {
       if (!grp.length) continue;
       html += '<div class="grp-head"><span class="store-badge ' + SC[store] + '">' + SL[store] + '</span><span class="divider"></span></div>';
       for (var gi = 0; gi < grp.length; gi++) html += card(grp[gi]);
-    }
-    if (curFilter === 'all') {
-      var doneGrp = [];
-      for (var di = 0; di < vis.length; di++) { if (vis[di].done) doneGrp.push(vis[di]); }
-      if (doneGrp.length) {
-        html += '<div class="grp-head"><span class="store-badge d">Done</span><span class="divider"></span></div>';
-        for (var dgi = 0; dgi < doneGrp.length; dgi++) html += card(doneGrp[dgi]);
-      }
     }
   } else {
     for (var vi = 0; vi < vis.length; vi++) html += card(vis[vi]);
@@ -429,160 +345,22 @@ function toast(msg) {
   toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2500);
 }
 
-function openModal() {
-  document.getElementById('overlay').classList.add('open');
-  showStep(1);
-}
-function closeModal() {
-  document.getElementById('overlay').classList.remove('open');
-  resetScan();
-}
-function overlayClick(e) {
-  if (e.target === document.getElementById('overlay')) closeModal();
-}
-function showStep(n) {
-  document.getElementById('step1').style.display = (n === 1) ? 'block' : 'none';
-  document.getElementById('step2').style.display = (n === 2) ? 'block' : 'none';
-  document.getElementById('step3').style.display = (n === 3) ? 'block' : 'none';
-  document.getElementById('step4').style.display = (n === 4) ? 'block' : 'none';
-}
-function resetScan() {
-  imgB64 = null;
-  imgMime = 'image/jpeg';
-  scanData = [];
-  document.getElementById('prevImg').src = '';
-  var eb = document.getElementById('errBox');
-  eb.style.display = 'none';
-  eb.textContent = '';
-  showStep(1);
-}
-function goBack() { resetScan(); }
 
-function handleFile(e) {
-  var file = e.target.files && e.target.files[0];
-  if (!file) return;
-  imgMime = file.type || 'image/jpeg';
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    imgB64 = ev.target.result.split(',')[1];
-    document.getElementById('prevImg').src = ev.target.result;
-    showStep(2);
-  };
-  reader.readAsDataURL(file);
-}
 
-function runScan() {
-  if (!imgB64) return;
-  showStep(3);
-  var body = JSON.stringify({
-    model: 'claude-sonnet-4-20250514',
-    max_tokens: 1000,
-    messages: [{
-      role: 'user',
-      content: [
-        { type: 'image', source: { type: 'base64', media_type: imgMime, data: imgB64 } },
-        { type: 'text', text: 'Extract every item from this shopping list image. Return ONLY a JSON array, no markdown, no explanation: [{"name":"item name","qty":"quantity or empty string","note":"any qualifier or empty string"}]. Rules: title-case names, split quantity from name, translate non-English to English.' }
-      ]
-    }]
-  });
-  fetch('https://shopping-proxy.rotmandaniel.workers.dev', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'anthropic-dangerous-direct-browser-access': 'true'
-    },
-    body: body
-  }).then(function(res) {
-    return res.json().then(function(data) {
-      if (!res.ok) {
-        var msg = (data && data.error && data.error.message) ? data.error.message : ('Error ' + res.status);
-        throw new Error(msg);
-      }
-      return data;
-    });
-  }).then(function(data) {
-    var raw = '';
-    if (!data || !data.content) {
-      throw new Error('Unexpected response: ' + JSON.stringify(data).slice(0, 200));
-    }
-    for (var i = 0; i < data.content.length; i++) {
-      if (data.content[i].type === 'text') raw += data.content[i].text;
-    }
-    var parsed;
-    try { parsed = JSON.parse(raw.replace(/```json|```/g, '').trim()); }
-    catch(e) { throw new Error('Could not read the list. Try a clearer, well-lit photo.'); }
-    if (!Array.isArray(parsed) || !parsed.length) throw new Error('No items found. Try a clearer photo.');
-    scanData = [];
-    for (var j = 0; j < parsed.length; j++) {
-      var p = parsed[j];
-      var nm = (p.name || '').trim();
-      if (nm) scanData.push({ name:nm, qty:(p.qty||'').trim(), note:(p.note||'').trim(), store:'supermarket', on:true });
-    }
-    if (!scanData.length) throw new Error('No readable items found.');
-    buildResults();
-    showStep(4);
-  }).catch(function(err) {
-    showStep(2);
-    var eb = document.getElementById('errBox');
-    eb.textContent = err.message || 'Something went wrong. Please try again.';
-    eb.style.display = 'block';
-  });
-}
 
-function buildResults() {
-  document.getElementById('resHeader').textContent = 'Found ' + scanData.length + ' item' + (scanData.length !== 1 ? 's' : '') + ' - review before adding:';
-  var html = '';
-  for (var i = 0; i < scanData.length; i++) {
-    var s = scanData[i];
-    html += '<div class="scan-item" id="si' + i + '">' +
-      '<div class="scan-item-top">' +
-        '<div class="scan-chk on" id="sc' + i + '" onclick="toggleScan(' + i + ')">&#10003;</div>' +
-        '<input class="scan-name" value="' + esc(s.name) + '" oninput="scanData[' + i + '].name=this.value" placeholder="Item name">' +
-      '</div>' +
-      '<div class="scan-grid">' +
-        '<div><label>Quantity</label><input type="text" value="' + esc(s.qty) + '" oninput="scanData[' + i + '].qty=this.value" placeholder="e.g. 2 packs"></div>' +
-        '<div><label>Where to buy</label><select onchange="scanData[' + i + '].store=this.value">' +
-          '<option value="supermarket">Supermarket</option>' +
-          '<option value="kosher">Kosher shop</option>' +
-          '<option value="other">Other</option>' +
-        '</select></div>' +
-      '</div>' +
-      '<input class="scan-note" type="text" value="' + esc(s.note) + '" oninput="scanData[' + i + '].note=this.value" placeholder="Notes (organic, sugar-free...)">' +
-    '</div>';
-  }
-  document.getElementById('resItems').innerHTML = html;
-  updateConfirm();
-}
 
-function toggleScan(i) {
-  scanData[i].on = !scanData[i].on;
-  document.getElementById('si' + i).classList.toggle('off', !scanData[i].on);
-  var c = document.getElementById('sc' + i);
-  c.classList.toggle('on', scanData[i].on);
-  c.innerHTML = scanData[i].on ? '&#10003;' : '';
-  updateConfirm();
-}
 
-function updateConfirm() {
-  var n = 0;
-  for (var i = 0; i < scanData.length; i++) { if (scanData[i].on) n++; }
-  var btn = document.getElementById('confirmBtn');
-  btn.textContent = n ? ('Add ' + n + ' item' + (n !== 1 ? 's' : '') + ' to list') : 'No items selected';
-  btn.disabled = !n;
-}
 
-function confirmScan() {
-  var added = 0;
-  for (var i = 0; i < scanData.length; i++) {
-    var s = scanData[i];
-    if (s.on && s.name.trim()) {
-      items.unshift({ id:Date.now() + Math.random(), name:s.name.trim(), qty:s.qty.trim(), store:s.store, note:s.note.trim(), by:curMember, done:false, scanned:true });
-      added++;
-    }
-  }
-  saveData(); render(); closeModal();
-  toast('Added ' + added + ' scanned item' + (added !== 1 ? 's' : ''));
-}
+
+
+
+
+
+
+
+
+
+
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && e.target.id === 'f-name') addItem();
