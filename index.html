@@ -240,7 +240,7 @@ var SKEY = 'familyshop_v4';
 var JSONBIN_KEY = '$2a$10$YpuTVSgb1IdqmbdmYwoxk.0ZkMaV6fwOM8SfwKhc60OV30RjfoVi6';
 // SHARED_BIN_ID: one bin for the whole family. Set once, same for every device.
 var SHARED_BIN_ID_KEY = 'familyshop_shared_bin';
-var JSONBIN_URL = '';
+var JSONBIN_PROXY = 'https://shopping-proxy.rotmandaniel.workers.dev/jsonbin';
 var syncTimer = null;
 var pollTimer = null;
 var items = [];
@@ -257,7 +257,7 @@ function getSharedBinId() {
 function setSharedBinId(id) {
   id = id.trim();
   try { localStorage.setItem(SHARED_BIN_ID_KEY, id); } catch(e) {}
-  JSONBIN_URL = 'https://api.jsonbin.io/v3/b/' + id;
+  JSONBIN_URL = JSONBIN_PROXY + '/v3/b/' + id;
 }
 
 function setSyncStatus(state, msg) {
@@ -273,7 +273,7 @@ function loadData() {
     showSetupScreen();
     return;
   }
-  JSONBIN_URL = 'https://api.jsonbin.io/v3/b/' + binId;
+  JSONBIN_URL = JSONBIN_PROXY + '/v3/b/' + binId;
   // Show cached data instantly
   try { items = JSON.parse(localStorage.getItem(SKEY)) || []; } catch(e) { items = []; }
   render();
@@ -306,7 +306,7 @@ function submitSetup() {
   }
   setSyncStatus('syncing', 'Connecting...');
   // Verify the bin exists before accepting
-  fetch('https://api.jsonbin.io/v3/b/' + id + '/latest', {
+  fetch(JSONBIN_PROXY + '/v3/b/' + id + '/latest', {
     headers: { 'X-Master-Key': JSONBIN_KEY }
   }).then(function(r) { return r.json(); })
   .then(function(data) {
@@ -331,7 +331,7 @@ function submitSetup() {
 function createNewBin() {
   setSyncStatus('syncing', 'Creating shared list...');
   document.getElementById('setupErr').textContent = '';
-  fetch('https://api.jsonbin.io/v3/b', {
+  fetch(JSONBIN_PROXY + '/v3/b', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
