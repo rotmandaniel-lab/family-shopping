@@ -81,29 +81,6 @@ textarea { resize:none; height:60px; line-height:1.4; }
 .empty { text-align:center; padding:48px 20px; color:var(--gray); font-size:0.95rem; }
 .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--green); color:#fff; padding:10px 22px; border-radius:30px; font-size:0.88rem; font-weight:600; box-shadow:0 4px 20px rgba(0,0,0,0.18); z-index:9999; transition:transform 0.3s ease; pointer-events:none; }
 .toast.show { transform:translateX(-50%) translateY(0); }
-.overlay.open { display:flex; }
-.modal-handle { width:40px; height:4px; background:var(--border); border-radius:4px; margin:0 auto 20px; }
-.modal h2 { font-family:'Fraunces',serif; font-size:1.2rem; color:var(--green); margin-bottom:6px; font-weight:700; }
-.modal-sub { font-size:0.85rem; color:var(--gray); margin-bottom:16px; line-height:1.5; }
-.upload-label:hover { border-color:var(--green); background:var(--green-pale); }
-.upload-label .ico { font-size:1.8rem; flex-shrink:0; }
-.upload-label strong { display:block; font-size:0.95rem; color:var(--text); margin-bottom:1px; }
-.upload-label small { font-size:0.78rem; color:var(--gray); }
-.prev-wrap img { width:100%; border-radius:12px; max-height:300px; object-fit:contain; background:#f0ede6; display:block; }
-.prev-clear { position:absolute; top:8px; right:8px; background:rgba(0,0,0,0.5); color:#fff; border:none; border-radius:50%; width:28px; height:28px; cursor:pointer; }
-.scan-item.off { opacity:0.4; }
-.scan-item-top { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
-.scan-chk.on { background:var(--green); border-color:var(--green); }
-.scan-grid select, .scan-grid input { font-size:0.82rem; padding:6px 10px; }
-.modal-actions { display:flex; gap:10px; margin-top:8px; }
-.btn-confirm:disabled { background:#9dbfb0; cursor:not-allowed; }
-@media (max-width:420px) {
-  .form-grid { grid-template-columns:1fr; }
-  .form-grid .full { grid-column:1; }
-  .scan-grid { grid-template-columns:1fr; }
-}
-
-.scan-trigger { width:100%; padding:11px; background:#fff; color:var(--green); border:2px dashed var(--green); border-radius:12px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; margin-top:8px; }
 .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:500; align-items:flex-end; justify-content:center; }
 .overlay.open { display:flex; }
 .modal { background:var(--card); border-radius:24px 24px 0 0; padding:24px 20px 32px; width:100%; max-width:640px; max-height:90vh; overflow-y:auto; }
@@ -139,6 +116,12 @@ textarea { resize:none; height:60px; line-height:1.4; }
 .err-box { background:var(--orange-pale); color:var(--orange); border-radius:10px; padding:10px 14px; font-size:0.85rem; margin-bottom:12px; }
 .hint { font-size:0.78rem; color:var(--gray); margin-bottom:14px; }
 .scan-badge { font-size:0.7rem; background:#fff3cd; color:#856404; border-radius:10px; padding:1px 7px; font-weight:600; }
+.scan-trigger { width:100%; padding:11px; background:#fff; color:var(--green); border:2px dashed var(--green); border-radius:12px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; margin-top:8px; }
+@media (max-width:420px) {
+  .form-grid { grid-template-columns:1fr; }
+  .form-grid .full { grid-column:1; }
+  .scan-grid { grid-template-columns:1fr; }
+}
 </style>
 </head>
 <body>
@@ -147,12 +130,12 @@ textarea { resize:none; height:60px; line-height:1.4; }
   <div class="header-top">
     <h1>&#128722; Family Shop</h1>
     <div class="header-stats">
-      <span class="stat-pill" id="totalPill">0 items</span>
+      <span class="stat-pill" id="totalPill">0 to get</span>
       <span class="stat-pill done" id="donePill">0 done</span>
       <span id="syncStatus" class="sync-status"></span>
     </div>
   </div>
-  <div class="filter-tabs">
+  <div class="filter-tabs" id="filterTabs">
     <button class="tab active" onclick="setFilter('all',this)">All</button>
     <button class="tab" onclick="setFilter('kosher',this)">&#128309; Kosher</button>
     <button class="tab" onclick="setFilter('supermarket',this)">&#128994; Supermarket</button>
@@ -173,74 +156,162 @@ textarea { resize:none; height:60px; line-height:1.4; }
     <input id="setupBinInput" type="text" placeholder="e.g. 6743abc12345def..." style="width:100%; padding:10px 14px; border:1.5px solid var(--border); border-radius:10px; font-size:0.9rem; font-family:'DM Sans',sans-serif; margin-bottom:8px; box-sizing:border-box;">
     <div id="setupErr" style="color:var(--orange); font-size:0.82rem; margin-bottom:10px; min-height:18px;"></div>
     <button onclick="submitSetup()" style="width:100%; padding:12px; background:var(--green); color:#fff; border:none; border-radius:12px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; margin-bottom:10px;">Connect to existing list</button>
-    <div style="text-align:center; color:var(--gray); font-size:0.82rem; margin-bottom:10px;">— or —</div>
+    <div style="text-align:center; color:var(--gray); font-size:0.82rem; margin-bottom:10px;">&#8212; or &#8212;</div>
     <button onclick="createNewBin()" style="width:100%; padding:12px; background:#fff; color:var(--green); border:2px solid var(--green); border-radius:12px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer;">Create a new shared list</button>
     <p style="color:var(--gray); font-size:0.78rem; margin-top:16px; line-height:1.5; text-align:center;">After creating, you'll get a bin ID to share with your family so everyone syncs together.</p>
   </div>
 </div>
 
 <div id="mainContent" style="display:none;">
-<div class="main">
-<button onclick="resetSharedBin()" style="display:block; margin:-8px auto 16px; background:none; border:none; color:var(--gray); font-size:0.72rem; cursor:pointer; padding:4px 8px; text-align:center; width:100%;">&#9881; Change shared list</button>
-  <div class="add-card">
-    <h2>+ Add item</h2>
+  <div class="main">
+    <button onclick="resetSharedBin()" style="display:block; margin:-8px auto 16px; background:none; border:none; color:var(--gray); font-size:0.72rem; cursor:pointer; padding:4px 8px; text-align:center; width:100%;">&#9881; Change shared list</button>
+    <div class="add-card">
+      <h2>+ Add item</h2>
+      <div class="form-grid">
+        <div class="full">
+          <label>Item name *</label>
+          <input id="f-name" type="text" placeholder="e.g. Almond milk">
+        </div>
+        <div>
+          <label>Quantity</label>
+          <input id="f-qty" type="text" placeholder="e.g. 2 bottles">
+        </div>
+        <div>
+          <label>Where to buy</label>
+          <select id="f-store">
+            <option value="supermarket">Supermarket</option>
+            <option value="kosher">Kosher shop</option>
+            <option value="other">Other</option>
+            <option value="amazon">Amazon</option>
+          </select>
+        </div>
+        <div class="full">
+          <label>Notes</label>
+          <textarea id="f-note" placeholder="e.g. Only organic, check sugar-free"></textarea>
+        </div>
+      </div>
+      <div class="by-row">
+        <label>Added by:</label>
+        <div class="family-btns">
+          <button class="family-btn active" data-name="Ima" onclick="selectMember(this)">Ima</button>
+          <button class="family-btn" data-name="Aba" onclick="selectMember(this)">Aba</button>
+          <button class="family-btn" data-name="Yaeli" onclick="selectMember(this)">Yaeli</button>
+          <button class="family-btn" data-name="Hannah" onclick="selectMember(this)">Hannah</button>
+        </div>
+      </div>
+      <button class="add-btn" onclick="addItem()">Add to list</button>
+      <button class="scan-trigger" onclick="openModal()">&#128247; Scan a written list</button>
+    </div>
+
+    <div class="list-bar">
+      <h3 id="listTitle">Shopping List</h3>
+      <button class="clear-btn" onclick="clearDone()">Remove done</button>
+    </div>
+    <div class="items-list" id="itemsList"></div>
+    <div class="toast" id="toast"></div>
+  </div>
+</div>
+
+<!-- Scan modal -->
+<div class="overlay" id="overlay" onclick="overlayClick(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h2>&#128247; Scan a written list</h2>
+
+    <div id="step1">
+      <p class="modal-sub">Take a photo of your handwritten list or upload one. Claude will extract every item.</p>
+      <label class="upload-label">
+        <span class="ico">&#128247;</span>
+        <div><strong>Take a photo</strong><small>Open camera</small></div>
+        <input type="file" accept="image/*" capture="environment" style="display:none" onchange="handleFile(event)">
+      </label>
+      <label class="upload-label">
+        <span class="ico">&#128444;</span>
+        <div><strong>Choose from gallery</strong><small>Upload existing photo</small></div>
+        <input type="file" accept="image/*" style="display:none" onchange="handleFile(event)">
+      </label>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+
+    <div id="step2" style="display:none">
+      <div class="prev-wrap">
+        <img id="prevImg" src="" alt="Preview">
+        <button class="prev-clear" onclick="goBack()">X</button>
+      </div>
+      <div id="errBox" class="err-box" style="display:none"></div>
+      <button class="btn-go" onclick="runScan()">Extract items from this image</button>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+
+    <div id="step3" style="display:none">
+      <div class="spinner-wrap">
+        <div class="spinner"></div>
+        <p style="color:var(--gray);font-size:0.9rem;">Reading your list...</p>
+      </div>
+    </div>
+
+    <div id="step4" style="display:none">
+      <div class="res-header" id="resHeader"></div>
+      <div id="resItems"></div>
+      <p class="hint">Edit names, set store, add notes. Uncheck items you do not want.</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-confirm" id="confirmBtn" onclick="confirmScan()">Add to list</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit modal -->
+<div class="overlay" id="editOverlay" onclick="editOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h2>Edit item</h2>
     <div class="form-grid">
       <div class="full">
         <label>Item name *</label>
-        <input id="f-name" type="text" placeholder="e.g. Almond milk">
+        <input id="e-name" type="text" placeholder="e.g. Almond milk">
       </div>
       <div>
         <label>Quantity</label>
-        <input id="f-qty" type="text" placeholder="e.g. 2 bottles">
+        <input id="e-qty" type="text" placeholder="e.g. 2 bottles">
       </div>
       <div>
         <label>Where to buy</label>
-        <select id="f-store">
+        <select id="e-store">
           <option value="supermarket">Supermarket</option>
           <option value="kosher">Kosher shop</option>
-          <option value="other">Other</option>
           <option value="amazon">Amazon</option>
+          <option value="other">Other</option>
         </select>
       </div>
       <div class="full">
         <label>Notes</label>
-        <textarea id="f-note" placeholder="e.g. Only organic, check sugar-free"></textarea>
+        <textarea id="e-note" placeholder="e.g. Only organic, check sugar-free"></textarea>
       </div>
     </div>
-    <div class="by-row">
-      <label>Added by:</label>
-      <div class="family-btns">
-        <button class="family-btn active" data-name="Ima" onclick="selectMember(this)">Ima</button>
-        <button class="family-btn" data-name="Aba" onclick="selectMember(this)">Aba</button>
-        <button class="family-btn" data-name="Yaeli" onclick="selectMember(this)">Yaeli</button>
-        <button class="family-btn" data-name="Hannah" onclick="selectMember(this)">Hannah</button>
-      </div>
+    <div class="modal-actions" style="margin-top:12px;">
+      <button class="btn-cancel" onclick="closeEdit()">Cancel</button>
+      <button class="btn-confirm" onclick="saveEdit()">Save changes</button>
     </div>
-    <button class="add-btn" onclick="addItem()">Add to list</button>
-    <button class="scan-trigger" onclick="openModal()">&#128247; Scan a written list</button>
-    
   </div>
-
-  <div class="list-bar">
-    <h3 id="listTitle">Shopping List</h3>
-    <button class="clear-btn" onclick="clearDone()">Remove done</button>
-  </div>
-  <div class="items-list" id="itemsList"></div>
-  <div class="toast" id="toast"></div>
-</div><!-- end .main -->
-</div><!-- end mainContent -->
+</div>
 
 <script>
 var imgB64 = null;
 var editId = null;
-var imgMime = "image/jpeg";
+var imgMime = 'image/jpeg';
 var scanData = [];
 
 var SKEY = 'familyshop_v4';
 var JSONBIN_KEY = '$2a$10$YpuTVSgb1IdqmbdmYwoxk.0ZkMaV6fwOM8SfwKhc60OV30RjfoVi6';
-// SHARED_BIN_ID: one bin for the whole family. Set once, same for every device.
 var SHARED_BIN_ID_KEY = 'familyshop_shared_bin';
 var JSONBIN_PROXY = 'https://shopping-proxy.rotmandaniel.workers.dev/jsonbin';
+var JSONBIN_URL = '';
 var syncTimer = null;
 var pollTimer = null;
 var items = [];
@@ -274,12 +345,9 @@ function loadData() {
     return;
   }
   JSONBIN_URL = JSONBIN_PROXY + '/v3/b/' + binId;
-  // Show cached data instantly
   try { items = JSON.parse(localStorage.getItem(SKEY)) || []; } catch(e) { items = []; }
   render();
-  // Then fetch latest from cloud
   syncFromCloud(true);
-  // Poll every 15 seconds for changes from other family members
   clearInterval(pollTimer);
   pollTimer = setInterval(function() { syncFromCloud(false); }, 15000);
 }
@@ -287,25 +355,23 @@ function loadData() {
 function showSetupScreen() {
   document.getElementById('setupScreen').style.display = 'block';
   document.getElementById('mainContent').style.display = 'none';
-  document.querySelector('.filter-tabs').style.display = 'none';
+  document.getElementById('filterTabs').style.display = 'none';
 }
 
 function hideSetupScreen() {
   document.getElementById('setupScreen').style.display = 'none';
   document.getElementById('mainContent').style.display = 'block';
-  document.querySelector('.filter-tabs').style.display = 'flex';
+  document.getElementById('filterTabs').style.display = 'flex';
 }
 
 function submitSetup() {
   var input = document.getElementById('setupBinInput').value.trim();
-  // Accept full URL or just the ID
-  var id = input.replace(/.*\/b\//,'').replace(/\/.*/,'').trim();
+  var id = input.replace(/.*\/b\//, '').replace(/\/.*/, '').trim();
   if (!id) {
     document.getElementById('setupErr').textContent = 'Please enter a valid bin ID or URL.';
     return;
   }
   setSyncStatus('syncing', 'Connecting...');
-  // Verify the bin exists before accepting
   fetch(JSONBIN_PROXY + '/v3/b/' + id + '/latest', {
     headers: { 'X-Master-Key': JSONBIN_KEY }
   }).then(function(r) { return r.json(); })
@@ -349,7 +415,6 @@ function createNewBin() {
       hideSetupScreen();
       render();
       toast('New shared list created!');
-      // Show the ID so it can be shared with family
       var shareMsg = 'Your shared list ID is:\n\n' + id + '\n\nShare this ID with other family members so they can connect to the same list.';
       setTimeout(function() { alert(shareMsg); }, 500);
       clearInterval(pollTimer);
@@ -364,7 +429,7 @@ function createNewBin() {
 
 function syncFromCloud(showStatus) {
   if (!JSONBIN_URL) return;
-  if (syncTimer) return; // save pending — don't overwrite local changes
+  if (syncTimer) return;
   if (showStatus) setSyncStatus('syncing', 'Syncing...');
   fetch(JSONBIN_URL + '/latest', {
     headers: { 'X-Master-Key': JSONBIN_KEY }
@@ -384,7 +449,7 @@ function syncFromCloud(showStatus) {
       }
     }
   }).catch(function() {
-    setSyncStatus('err', 'Sync failed — check connection');
+    setSyncStatus('err', 'Sync failed');
     if (!showStatus) setTimeout(function() { setSyncStatus('', ''); }, 5000);
   });
 }
@@ -392,7 +457,7 @@ function syncFromCloud(showStatus) {
 function saveData() {
   localStorage.setItem(SKEY, JSON.stringify(items));
   clearTimeout(syncTimer);
-  syncTimer = setTimeout(function() { saveToCloud(); }, 500);
+  syncTimer = setTimeout(function() { syncTimer = null; saveToCloud(); }, 500);
 }
 
 function saveToCloud() {
@@ -410,12 +475,12 @@ function saveToCloud() {
     setSyncStatus('ok', 'Saved');
     setTimeout(function() { setSyncStatus('', ''); }, 2000);
   }).catch(function() {
-    setSyncStatus('err', 'Save failed — check connection');
+    setSyncStatus('err', 'Save failed');
   });
 }
 
 function resetSharedBin() {
-  if (!confirm('This will disconnect from the shared list on this device. You\'ll need the bin ID to reconnect. Continue?')) return;
+  if (!confirm('This will disconnect from the shared list on this device. You will need the bin ID to reconnect. Continue?')) return;
   try { localStorage.removeItem(SHARED_BIN_ID_KEY); localStorage.removeItem(SKEY); } catch(e) {}
   JSONBIN_URL = '';
   clearInterval(pollTimer);
@@ -496,8 +561,8 @@ function getVisible() {
   var out = [];
   for (var i = 0; i < items.length; i++) {
     var it = items[i];
-    if (curFilter === 'todo' && it.done) continue;
     if (curFilter === 'all' && it.done) continue;
+    if (curFilter === 'todo' && it.done) continue;
     if (curFilter === 'done' && !it.done) continue;
     if (curFilter === 'kosher' && (it.store !== 'kosher' || it.done)) continue;
     if (curFilter === 'supermarket' && (it.store !== 'supermarket' || it.done)) continue;
@@ -578,30 +643,6 @@ function toast(msg) {
   toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2500);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && e.target.id === 'f-name') addItem();
-  if (e.key === 'Escape') { closeModal(); closeEdit(); }
-});
-
-
-
 function openEdit(id, e) {
   if (e) e.stopPropagation();
   var it = null;
@@ -614,13 +655,16 @@ function openEdit(id, e) {
   document.getElementById('e-note').value = it.note || '';
   document.getElementById('editOverlay').classList.add('open');
 }
+
 function closeEdit() {
   document.getElementById('editOverlay').classList.remove('open');
   editId = null;
 }
+
 function editOverlayClick(e) {
   if (e.target === document.getElementById('editOverlay')) closeEdit();
 }
+
 function saveEdit() {
   var name = document.getElementById('e-name').value.trim();
   if (!name) return;
@@ -641,19 +685,23 @@ function openModal() {
   document.getElementById('overlay').classList.add('open');
   showStep(1);
 }
+
 function closeModal() {
   document.getElementById('overlay').classList.remove('open');
   resetScan();
 }
+
 function overlayClick(e) {
   if (e.target === document.getElementById('overlay')) closeModal();
 }
+
 function showStep(n) {
   document.getElementById('step1').style.display = (n === 1) ? 'block' : 'none';
   document.getElementById('step2').style.display = (n === 2) ? 'block' : 'none';
   document.getElementById('step3').style.display = (n === 3) ? 'block' : 'none';
   document.getElementById('step4').style.display = (n === 4) ? 'block' : 'none';
 }
+
 function resetScan() {
   imgB64 = null;
   imgMime = 'image/jpeg';
@@ -664,7 +712,9 @@ function resetScan() {
   eb.textContent = '';
   showStep(1);
 }
+
 function goBack() { resetScan(); }
+
 function handleFile(e) {
   var file = e.target.files && e.target.files[0];
   if (!file) return;
@@ -677,6 +727,7 @@ function handleFile(e) {
   };
   reader.readAsDataURL(file);
 }
+
 function runScan() {
   if (!imgB64) return;
   showStep(3);
@@ -719,7 +770,7 @@ function runScan() {
     for (var j = 0; j < parsed.length; j++) {
       var p = parsed[j];
       var nm = (p.name || '').trim();
-      if (nm) scanData.push({ name:nm, qty:(p.qty||'').trim(), note:(p.note||'').trim(), store:'supermarket', on:true });
+      if (nm) scanData.push({ name: nm, qty: (p.qty || '').trim(), note: (p.note || '').trim(), store: 'supermarket', on: true });
     }
     if (!scanData.length) throw new Error('No readable items found.');
     buildResults();
@@ -731,6 +782,7 @@ function runScan() {
     eb.style.display = 'block';
   });
 }
+
 function buildResults() {
   document.getElementById('resHeader').textContent = 'Found ' + scanData.length + ' item' + (scanData.length !== 1 ? 's' : '') + ' - review before adding:';
   var html = '';
@@ -756,6 +808,7 @@ function buildResults() {
   document.getElementById('resItems').innerHTML = html;
   updateConfirm();
 }
+
 function toggleScan(i) {
   scanData[i].on = !scanData[i].on;
   document.getElementById('si' + i).classList.toggle('off', !scanData[i].on);
@@ -764,6 +817,7 @@ function toggleScan(i) {
   c.innerHTML = scanData[i].on ? '&#10003;' : '';
   updateConfirm();
 }
+
 function updateConfirm() {
   var n = 0;
   for (var i = 0; i < scanData.length; i++) { if (scanData[i].on) n++; }
@@ -771,12 +825,13 @@ function updateConfirm() {
   btn.textContent = n ? ('Add ' + n + ' item' + (n !== 1 ? 's' : '') + ' to list') : 'No items selected';
   btn.disabled = !n;
 }
+
 function confirmScan() {
   var added = 0;
   for (var i = 0; i < scanData.length; i++) {
     var s = scanData[i];
     if (s.on && s.name.trim()) {
-      items.unshift({ id:Math.floor(Date.now() + Math.random() * 1000), name:s.name.trim(), qty:s.qty.trim(), store:s.store, note:s.note.trim(), by:curMember, done:false, scanned:true });
+      items.unshift({ id: Math.floor(Date.now() + Math.random() * 1000), name: s.name.trim(), qty: s.qty.trim(), store: s.store, note: s.note.trim(), by: curMember, done: false, scanned: true });
       added++;
     }
   }
@@ -784,97 +839,15 @@ function confirmScan() {
   toast('Added ' + added + ' scanned item' + (added !== 1 ? 's' : ''));
 }
 
-loadData();
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && e.target.id === 'f-name') addItem();
+  if (e.key === 'Escape') { closeModal(); closeEdit(); }
+});
+
+// THE FIX: wait for full DOM before calling loadData
+document.addEventListener('DOMContentLoaded', function() {
+  loadData();
+});
 </script>
-
-<div class="overlay" id="overlay" onclick="overlayClick(event)">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <h2>&#128247; Scan a written list</h2>
-
-    <div id="step1">
-      <p class="modal-sub">Take a photo of your handwritten list or upload one. Claude will extract every item.</p>
-
-      <label class="upload-label">
-        <span class="ico">&#128247;</span>
-        <div><strong>Take a photo</strong><small>Open camera</small></div>
-        <input type="file" accept="image/*" capture="environment" style="display:none" onchange="handleFile(event)">
-      </label>
-
-      <label class="upload-label">
-        <span class="ico">&#128444;</span>
-        <div><strong>Choose from gallery</strong><small>Upload existing photo</small></div>
-        <input type="file" accept="image/*" style="display:none" onchange="handleFile(event)">
-      </label>
-
-      <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      </div>
-    </div>
-
-    <div id="step2" style="display:none">
-      <div class="prev-wrap">
-        <img id="prevImg" src="" alt="Preview">
-        <button class="prev-clear" onclick="goBack()">X</button>
-      </div>
-      <div id="errBox" class="err-box" style="display:none"></div>
-      <button class="btn-go" onclick="runScan()">Extract items from this image</button>
-      <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      </div>
-    </div>
-
-    <div id="step3" style="display:none">
-      <div class="spinner-wrap">
-        <div class="spinner"></div>
-        <p style="color:var(--gray);font-size:0.9rem;">Reading your list...</p>
-      </div>
-    </div>
-
-    <div id="step4" style="display:none">
-      <div class="res-header" id="resHeader"></div>
-      <div id="resItems"></div>
-      <p class="hint">Edit names, set store, add notes. Uncheck items you do not want.</p>
-      <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-        <button class="btn-confirm" id="confirmBtn" onclick="confirmScan()">Add to list</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="overlay" id="editOverlay" onclick="editOverlayClick(event)">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <h2>Edit item</h2>
-    <div class="form-grid">
-      <div class="full">
-        <label>Item name *</label>
-        <input id="e-name" type="text" placeholder="e.g. Almond milk">
-      </div>
-      <div>
-        <label>Quantity</label>
-        <input id="e-qty" type="text" placeholder="e.g. 2 bottles">
-      </div>
-      <div>
-        <label>Where to buy</label>
-        <select id="e-store">
-          <option value="supermarket">Supermarket</option>
-          <option value="kosher">Kosher shop</option>
-          <option value="amazon">Amazon</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="full">
-        <label>Notes</label>
-        <textarea id="e-note" placeholder="e.g. Only organic, check sugar-free"></textarea>
-      </div>
-    </div>
-    <div class="modal-actions" style="margin-top:12px;">
-      <button class="btn-cancel" onclick="closeEdit()">Cancel</button>
-      <button class="btn-confirm" onclick="saveEdit()">Save changes</button>
-    </div>
-  </div>
-</div>
 </body>
 </html>
